@@ -9,6 +9,25 @@ import { useNavigate } from 'react-router-dom';
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
+import axios from 'axios';
+import { showErrorMessage,showSuccessMessage } from '../../../utils/Notification';
+import { isEmail, isEmpty,isLength, isMatch } from '../../../utils/Validation';
+const initialState={
+      name:'',
+      email:'',
+      password:'',
+      cf_password:'',
+      role:'',
+      err:'',
+      success:''
+}
+
+
+
+
+
+
+
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
@@ -38,29 +57,100 @@ export default function RegisterForm() {
     }
   });
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  const { errors, touched, isSubmitting, getFieldProps } = formik;
+
+
+  const [user,setUser]=useState(initialState);
+  const [userrole,setrole]=useState(0);
+
+  const {name,email,password,cf_password,role,err,success}=user;
+  const handleChangeInput=e=>{
+    const {name,value}=e.target;
+    setUser({...user,[name]:value,err:'',success:''})
+  }
+
+  const onChangeUser=e=> {
+    if(e.target.value==='guardian'){
+      setrole(1)
+      setUser({...user,role:1,err:'',success:''})
+      console.log(e.target.value);
+      console.log(userrole)
+      return
+    }
+    setrole(1)
+    setUser({...user,role:2,err:'',success:''})
+    console.log(e.target.value);
+    console.log(userrole)
+    
+  }
+
+
+const handleSignupSubmit=async e=>{
+e.preventDefault();
+
+
+if(isEmpty(name) || isEmpty(password)){
+  return  setUser({...user,err:'Please fill in all fields',success:''})
+ }
+if(!isEmail(email)){
+ return setUser({...user,err:'Please enter a valid Email',success:''})
+}
+if(isLength(password)){
+ return setUser({...user,err:'Please enter a password with length atleast 5',success:''})
+}
+if(!isMatch(password,cf_password)){
+ return setUser({...user,err:'Verify password and password donot match',success:''})
+}
+
+
+
+
+
+
+
+try {
+ 
+const res=await axios.post('/user/register',{
+  name,email,password,role
+})
+
+setUser({...user,err:'',success:res.data.msg})
+
+} catch (err) {
+  err.response.data.msg && setUser({...user,err:err.response.data.msg,success:''})
+}
+}
+
+
+
+
+
+
+
+
+
 
   return (
     <FormikProvider value={formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Stack spacing={3}>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField
-              fullWidth
-              label="First name"
-              {...getFieldProps('firstName')}
-              error={Boolean(touched.firstName && errors.firstName)}
-              helperText={touched.firstName && errors.firstName}
-            />
+      <Form autoComplete="off" noValidate onSubmit={handleSignupSubmit}>
 
-            <TextField
-              fullWidth
-              label="Last name"
-              {...getFieldProps('lastName')}
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName}
-            />
-          </Stack>
+
+      {err && showErrorMessage(err)}
+              {success && showSuccessMessage(success)}
+
+
+        <Stack spacing={3}>
+          
+        <TextField id="name"  name="name"
+                placeholder="Your Name"
+        
+        onChange={handleChangeInput}
+        value={name}
+        
+        />
+
+           
+          
 
           <TextField
             fullWidth
@@ -70,6 +160,8 @@ export default function RegisterForm() {
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
+            onChange={handleChangeInput}
+            value={email}
           />
 
           <TextField
@@ -89,7 +181,40 @@ export default function RegisterForm() {
             }}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
+
+            onChange={handleChangeInput}
+            value={password}
+
           />
+
+
+<TextField
+            fullWidth
+            type="password"
+            id="cf_password" name="cf_password" 
+            placeholder="Confirm Password"
+            onChange={handleChangeInput}
+            value={cf_password}
+          />
+
+
+
+<div>
+        <input type="radio" value="guardian" name="usertype" 
+        
+        
+        onChange={onChangeUser}
+        /> Guardian
+        <input type="radio" value="doctor" name="usertype" 
+        
+        onChange={onChangeUser}
+        /> Doctor
+        
+      </div>
+
+
+
+
 
           <LoadingButton
             fullWidth

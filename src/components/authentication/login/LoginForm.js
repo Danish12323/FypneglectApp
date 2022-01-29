@@ -1,10 +1,12 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+import { showErrorMessage,showSuccessMessage } from '../../../utils/Notification';
 // material
 import {
   Link,
@@ -18,6 +20,25 @@ import {
 import { LoadingButton } from '@mui/lab';
 
 // ----------------------------------------------------------------------
+
+import axios from 'axios';
+//import { showErrorMessage,showSuccessMessage } from './Utilities/Notification';
+import {dispatchLogin} from '../..//../redux/actions/authAction';
+import {useDispatch} from 'react-redux';
+
+
+
+const initialState={
+
+  email:'',
+  password:'',
+  err:'',
+  success:''
+}
+
+
+
+
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -40,15 +61,64 @@ export default function LoginForm() {
     }
   });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+
+
+
+  const { errors, touched, values, isSubmitting, getFieldProps } = formik;
 
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
 
+
+
+
+
+
+  const [user,setUser]=useState(initialState);
+  const dispatch=useDispatch();
+
+
+  const {email,password,err,success}=user;
+  const handleChangeInput=e=>{
+    const {name,value}=e.target;
+    setUser({...user,[name]:value,err:'',success:''})
+  }
+const handleLoginSubmit=async e=>{
+e.preventDefault();
+try {
+  const res=await axios.post('/user/login',{email,password})
+  setUser({...user,err:'',success:res.data.msg})
+  console.log(res)
+  localStorage.setItem('firstLogin',true)
+  dispatch(dispatchLogin())
+  navigate('/dashboard', { replace: true });
+
+} catch (err) {
+  err.response.data.msg && setUser({...user,err:err.response.data.msg,success:''})
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <FormikProvider value={formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+      <div className="heelo" style={{marginBottom:'20px', color:'white'}}>
+      {err && showErrorMessage(err)}
+  {success && showSuccessMessage(success)}
+        
+      </div>
+            
+      <Form autoComplete="off" noValidate onSubmit={handleLoginSubmit}>
         <Stack spacing={3}>
           <TextField
             fullWidth
@@ -58,6 +128,9 @@ export default function LoginForm() {
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
+            onChange={handleChangeInput}
+            value={email}
+
           />
 
           <TextField
@@ -77,6 +150,10 @@ export default function LoginForm() {
             }}
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
+
+            onChange={handleChangeInput}
+            value={password}
+
           />
         </Stack>
 
@@ -86,7 +163,7 @@ export default function LoginForm() {
             label="Remember me"
           />
 
-          <Link component={RouterLink} variant="subtitle2" to="#">
+          <Link component={RouterLink} variant="subtitle2" to="/forgetpassword">
             Forgot password?
           </Link>
         </Stack>

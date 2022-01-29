@@ -1,3 +1,4 @@
+
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
@@ -88,7 +89,7 @@ export default function Register() {
           <MHidden width="smUp">
             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
               Already have an account?&nbsp;
-              <Link to="/login" component={RouterLink}>
+              <Link to="/login">
                 Login
               </Link>
             </Typography>
