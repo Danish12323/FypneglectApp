@@ -20,6 +20,8 @@ import DoctorDashboardApp from './Doctordashboard/pages/DashboardApp';
 import DoctorProducts from './Doctordashboard/pages/Products';
 import DoctorBlog from './Doctordashboard/pages/Blog';
 import DoctorUser from './Doctordashboard/pages/User';
+import Profile from './pages/Profile';
+import DoctorProfile from './Doctordashboard/pages/Profile';
 
 
 
@@ -38,7 +40,8 @@ export default function Router() {
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
-        { path: 'blog', element: <Blog /> }
+        { path: 'blog', element: <Blog /> },
+        { path: 'profile', element: <Profile />}
       ]
     },
 
@@ -51,7 +54,8 @@ export default function Router() {
         { path: 'app', element: <DoctorDashboardApp /> },
         { path: 'user', element: <DoctorUser /> },
         { path: 'products', element: <DoctorProducts /> },
-        { path: 'blog', element: <DoctorBlog /> }
+        { path: 'blog', element: <DoctorBlog /> },
+        { path: 'profile', element: <DoctorProfile />}
       ]
     },
 

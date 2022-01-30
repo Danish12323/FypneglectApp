@@ -43,6 +43,11 @@ const sidebarConfig = [
     icon: getIcon(personAddFill)
   },
   {
+    title: 'profile',
+    path: '/dashboard/profile',
+    icon: getIcon(personAddFill)
+  },
+  {
     title: 'Not found',
     path: '/404',
     icon: getIcon(alertTriangleFill)

@@ -16,15 +16,17 @@ import {
   AppCurrentSubject,
   AppConversionRates
 } from '../components/_dashboard/app';
-
+import { useSelector } from 'react-redux';
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
+  const auth=useSelector(state=>state.auth);
+const {user}=auth;
   return (
     <Page title="Dashboard | Minimal-UI">
       <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
-          <Typography variant="h4">Hi, Welcome Guardian</Typography>
+          <Typography variant="h4">Hi, Welcome {user.name}</Typography>
         </Box>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>

@@ -32,6 +32,16 @@ const sidebarConfig = [
     path: '/docdashboard/blog',
     icon: getIcon(fileTextFill)
   },
+
+  
+  {
+    title: 'profile',
+    path: '/docdashboard/profile',
+    icon: getIcon(fileTextFill)
+  },
+
+
+
   {
     title: 'login',
     path: '/login',
