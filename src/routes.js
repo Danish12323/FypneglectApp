@@ -15,6 +15,17 @@ import ForgetPassword from './components/authentication/login/forgetPassword';
 import ResetPassword from './components/authentication/login/Resetpassword';
 import GuardianActivation from './components/authentication/register/GuardianActivation';
 import DoctorActivation from './components/authentication/register/DoctorActivation';
+import DoctorDashboardLayout from './Doctordashboard/layouts/dashboard';
+import DoctorDashboardApp from './Doctordashboard/pages/DashboardApp';
+import DoctorProducts from './Doctordashboard/pages/Products';
+import DoctorBlog from './Doctordashboard/pages/Blog';
+import DoctorUser from './Doctordashboard/pages/User';
+
+
+
+
+
+
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -30,6 +41,29 @@ export default function Router() {
         { path: 'blog', element: <Blog /> }
       ]
     },
+
+
+    {
+      path: '/docdashboard',
+      element: <DoctorDashboardLayout />,
+      children: [
+        { element: <Navigate to="/docdashboard/app" replace /> },
+        { path: 'app', element: <DoctorDashboardApp /> },
+        { path: 'user', element: <DoctorUser /> },
+        { path: 'products', element: <DoctorProducts /> },
+        { path: 'blog', element: <DoctorBlog /> }
+      ]
+    },
+
+
+
+
+
+
+
+
+
+
     {
       path: '/',
       element: <LogoOnlyLayout />,
@@ -47,6 +81,16 @@ export default function Router() {
         { path: '*', element: <Navigate to="/404" /> }
       ]
     },
+
+
+
+
+
+
+
+
+
+
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }

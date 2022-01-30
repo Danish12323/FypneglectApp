@@ -104,7 +104,7 @@ return(
           
           
           <li className="nav-item" key="item70">
-          {isLogged && user.role===2 ? <Link to='/dashboard' className="nav-link js-scroll-trigger" >Dashboard</Link>:''}
+          {isLogged && user.role===2 ? <Link to='/docdashboard' className="nav-link js-scroll-trigger" >Dashboard</Link>:''}
           
           </li>
           

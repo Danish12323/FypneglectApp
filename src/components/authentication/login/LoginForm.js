@@ -92,7 +92,7 @@ try {
   console.log(res)
   localStorage.setItem('firstLogin',true)
   dispatch(dispatchLogin())
-  navigate('/dashboard', { replace: true });
+  navigate('/home', { replace: true });
 
 } catch (err) {
   err.response.data.msg && setUser({...user,err:err.response.data.msg,success:''})
