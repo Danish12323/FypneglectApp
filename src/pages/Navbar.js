@@ -5,11 +5,12 @@ import {useSelector} from 'react-redux';
 import axios from 'axios';
 export default function Navbar(){
 
-    
+   
 
 
     const auth=useSelector(state=>state.auth);
     const {user,isLogged}=auth;
+    //setppic()
   //console.log(user.role)  
     const handleLogout=async()=>{
     try{
@@ -31,8 +32,7 @@ window.location.href='/'
 
     const link1= <li className="nav-item" key="item7">
     <Link  to='/'  key={"heh1"} className="nav-link js-scroll-trigger">
-    <img src={user.profilepic} alt="user" 
-    style={{width:20,height:20,borderRadius:'10px'}}/>{user.name}</Link></li>
+{user.name}</Link></li>
     
     const link2=<li className="nav-item" key="item8">
     <Link to='/' onClick={handleLogout}

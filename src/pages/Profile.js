@@ -32,12 +32,14 @@ export default function Profile() {
     const auth=useSelector(state=>state.auth);
     const token=useSelector(state=>state.token)
     const {user}=auth;
-    
+    const [ppic,setppic]=useState('');
     useEffect(()=>{
         Axios.get('/user/infor',{
             headers:{Authorization:token}
         }).then((response) => {
           setguardian(response.data);
+          setprofilepic(response.data.profilepic);
+          setppic(' http://localhost:5000//'+response.data.profilepic)
           //console.log(response.data)
         });
         },[token]);
@@ -51,6 +53,8 @@ export default function Profile() {
         const [gage, setGAge] = useState("");
         const [gcountry, setgCountry] = useState("");
         const [gcity, setgCity] = useState("");
+        // eslint-disable-next-line
+        const [profilepic,setprofilepic]=useState("");
         //const [profilepic, setprofilepic] = useState();
 
         const [gpassword, setgPassword] = useState("");
@@ -60,6 +64,51 @@ export default function Profile() {
 
         const [message, setmessage] = useState("");
   
+
+        const [pimage,setpimage]=useState('');
+        const sendImage=(event)=>{
+    const data=new FormData();
+    data.append("myImage",pimage)
+    console.log(data)
+    Axios.post('/guardian/updateprofileimage',data,
+    
+    {
+        headers:{Authorization:token}
+    }
+    )
+    .then(res=>{console.log(res.data.filepath);
+    
+        Axios.get('/user/infor',{
+            headers:{Authorization:token}
+        }).then(res=>{setguardian(res.data)
+        
+            setppic(' http://localhost:5000//'+res.data.profilepic)
+        
+        }
+        
+
+        
+        )
+        .catch(err=>console.log(err))
+    
+    
+    
+    }
+    
+    )
+    .catch(err=>console.log(err))
+    
+        }
+
+
+
+
+
+
+
+
+
+
 
         const updateGuardian = () =>{
             var obj = {}; 
@@ -154,11 +203,29 @@ export default function Profile() {
 
 <div className="col-12">
             <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-            <img alt="hello img" className="rounded-circle mt-5" width="150px" src={user.profilepic} />
+
+            <img alt="hello img" className="rounded-circle mt-5" width="150px" src={ppic} />
             <span className="font-weight-bold">{guardian.name}</span>
             <span className="text-black-50">{user.email}</span><span> </span>
-            <input type="file" name="profilepic"  className='text-center' />
-            <div className="mt-2"><button  className={['btn','btn-primary' ,'btn-primary' ,'profile-button',classes.profilebutton].join(' ')} type="button">Update Profile picture</button></div>
+            <input type="file" name="profilepic"  className='text-center'
+            
+            
+            onChange={event =>{
+                const file=event.target.files[0];
+                setpimage(file);
+            }}
+            
+            
+            
+            
+            
+            />
+            <div className="mt-2"><button  className={['btn','btn-primary' ,'btn-primary' ,'profile-button',classes.profilebutton].join(' ')} type="button"
+            
+            
+            onClick={sendImage}
+            
+            >Update Profile picture</button></div>
             </div>
 
         </div>
@@ -209,8 +276,6 @@ export default function Profile() {
 
 </div>
 </div>
-
-
 
 
       </Container>

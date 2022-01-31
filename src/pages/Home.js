@@ -118,7 +118,11 @@ function Home(){
         </div>
       </div>
     </section>
+<section>
 
+
+  
+</section>
 
 
     <section id="learn" className="p-5 bg-dark text-light">

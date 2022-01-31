@@ -22,6 +22,7 @@ import DoctorBlog from './Doctordashboard/pages/Blog';
 import DoctorUser from './Doctordashboard/pages/User';
 import Profile from './pages/Profile';
 import DoctorProfile from './Doctordashboard/pages/Profile';
+import Testimg from './pages/testimage';
 
 
 
@@ -79,7 +80,8 @@ export default function Router() {
         {path: 'forgetpassword', element: <ForgetPassword />}, 
         {path:'user/reset/:id',element:< ResetPassword  />},  
         {path:'guardian/activate/:activation_token',element:< GuardianActivation  />},  
-        {path:'doctor/activate/:activation_token',element:< DoctorActivation  />},       
+        {path:'doctor/activate/:activation_token',element:< DoctorActivation  />},    
+        {path: 'test', element: <Testimg />},   
         { path: '404', element: <NotFound /> },
         { path: '/', element: <Navigate to="/home" /> },
         { path: '*', element: <Navigate to="/404" /> }
