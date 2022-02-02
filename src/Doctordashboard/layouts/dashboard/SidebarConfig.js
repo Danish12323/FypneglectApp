@@ -41,6 +41,11 @@ const sidebarConfig = [
   },
 
 
+  {
+    title: 'review',
+    path:  '/docdashboard/review',
+    icon: getIcon(personAddFill)
+  },
 
   {
     title: 'login',
@@ -52,6 +57,19 @@ const sidebarConfig = [
     path: '/register',
     icon: getIcon(personAddFill)
   },
+
+
+
+
+
+
+
+  
+
+
+
+
+
   {
     title: 'Not found',
     path: '/404',

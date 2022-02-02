@@ -24,7 +24,8 @@ import Profile from './pages/Profile';
 import DoctorProfile from './Doctordashboard/pages/Profile';
 // import Testimg from './pages/testimage';
 import Testprofile from './pages/Testprofile';
-
+import Review from './pages/Review';
+import DocReview from './Doctordashboard/pages/Review';
 
 
 
@@ -42,7 +43,8 @@ export default function Router() {
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
-        { path: 'profile', element: <Profile />}
+        { path: 'profile', element: <Profile />},
+        {path: 'review', element: <Review />}
       ]
     },
 
@@ -56,7 +58,8 @@ export default function Router() {
         { path: 'user', element: <DoctorUser /> },
         { path: 'products', element: <DoctorProducts /> },
         { path: 'blog', element: <DoctorBlog /> },
-        { path: 'profile', element: <DoctorProfile />}
+        { path: 'profile', element: <DoctorProfile />},
+        { path: 'review', element: <DocReview />}
       ]
     },
 

@@ -32,6 +32,16 @@ const sidebarConfig = [
     path: '/dashboard/blog',
     icon: getIcon(fileTextFill)
   },
+
+
+  
+  {
+    title: 'review',
+    path: '/dashboard/review',
+    icon: getIcon(fileTextFill)
+  },
+
+
   {
     title: 'login',
     path: '/login',

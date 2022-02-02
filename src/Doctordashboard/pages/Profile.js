@@ -207,6 +207,8 @@ export default function Profile() {
           <div className="col-12">
             <div className="d-flex flex-column align-items-center text-center p-3 py-5">
             <img alt="hello img" className="rounded-circle mt-5" src={ppic}
+            style={{borderRadious:"100px", 
+        height:"200px", width:"200px"}}
             
             />
             <span className="font-weight-bold">{guardian.name}</span>
